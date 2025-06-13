@@ -3,9 +3,10 @@ import sys
 import configparser
 import subprocess
 import re
+import urllib.parse
 
 # Define the session name to update
-SESSION_NAME = "POCO%20X7%20PRO"  # <-- Change this to your session name
+SESSION_NAME = "POCO X7 PRO"  # <-- Change this to your session name (with spaces and special characters)
 
 def get_winscp_ini_path():
     appdata = os.environ.get("APPDATA")
@@ -48,7 +49,9 @@ def main():
     config.optionxform = str  # preserve case
     config.read(ini_path, encoding="utf-8")
 
-    section = f"Sessions\\{SESSION_NAME}"
+    # Encode the session name for the INI section
+    encoded_session_name = urllib.parse.quote(SESSION_NAME, safe='')
+    section = f"Sessions\\{encoded_session_name}"
     if section not in config:
         print(f"Session '{SESSION_NAME}' not found in {ini_path}")
         sys.exit(1)
