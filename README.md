@@ -1,2 +1,3 @@
 # winscp-session-gateway-updater
-A Python script to automatically update the HostName of a specific WinSCP session to your current default gateway IP address. Useful for users who frequently change networks and need their WinSCP session to always connect to the correct local gateway.
+
+I created this script because I frequently use FTP to transfer files between my Android phone and Windows computer. In recent versions of Android, every time the hotspot function is enabled, the AP's network subnet—and thus the gateway address—are different. To avoid manually changing the host in WinSCP every time, I created this script.
