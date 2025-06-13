@@ -5,8 +5,7 @@ import subprocess
 import re
 import urllib.parse
 
-# Define the session name to update
-SESSION_NAME = "POCO X7 PRO"  # <-- Change this to your session name (with spaces and special characters)
+SESSION_NAME = "POCO X7 PRO"  # <-- Change this to your session name
 
 def get_winscp_ini_path():
     appdata = os.environ.get("APPDATA")
