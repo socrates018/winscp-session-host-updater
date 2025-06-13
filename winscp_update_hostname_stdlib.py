@@ -18,6 +18,10 @@ def get_winscp_ini_path():
         sys.exit(1)
     return ini_path
 
+def is_valid_ipv4(ip):
+    parts = ip.split('.')
+    return len(parts) == 4 and all(p.isdigit() and 0 <= int(p) <= 255 for p in parts)
+
 def get_gateway_ips():
     # Use ipconfig to find default gateway(s)
     try:
@@ -27,12 +31,15 @@ def get_gateway_ips():
         sys.exit(1)
     # Find lines like: "Default Gateway . . . . . . . . . : 192.168.1.1"
     matches = re.findall(r"Default Gateway[ .:]*([\d\.]+)", output)
-    # Remove empty and duplicate entries
-    ips = [ip for ip in matches if ip.strip()]
+    # Remove empty, single dot, and duplicate entries; filter for valid IPv4 addresses
+    ips = [ip for ip in matches if ip.strip() and ip.strip() != '.' and is_valid_ipv4(ip.strip())]
     return list(dict.fromkeys(ips))
 
 def choose_ip(ips):
+    if not ips:
+        return None
     if len(ips) == 1:
+        print(f"Only one gateway IP found: {ips[0]}")
         return ips[0]
     print("Multiple gateway IPs found:")
     for idx, ip in enumerate(ips):
