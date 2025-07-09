@@ -73,6 +73,13 @@ def main():
     with open(ini_path, "w", encoding="utf-8") as f:
         config.write(f, space_around_delimiters=False)
     print(f"Updated session '{SESSION_NAME}' HostName to {gateway_ip} in {ini_path}")
+    
+    # Auto-open WinSCP
+    try:
+        print("Opening WinSCP...")
+        subprocess.Popen([r"C:\Program Files (x86)\WinSCP\WinSCP.exe", SESSION_NAME])
+    except Exception:
+        print("Failed to open WinSCP. Please open it manually.")
 
 if __name__ == "__main__":
     main()
